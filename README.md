@@ -1,4 +1,4 @@
-# A basic watcher/notifier for Reddit's /r/buildapcsales
+# A simple watcher/notifier for Reddit's /r/buildapcsales
 
 # Quickstart
 
@@ -8,3 +8,5 @@ deals_mailgun_api=<your Mailgun API key>
 deals_mailgun_domain=<your Mailgun originating domain>
 deals_mail_to=<the destination email to notify>
 ```
+
+Then `docker-compose up` !

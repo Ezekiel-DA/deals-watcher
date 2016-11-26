@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+    watcher-reddit:
+        ports:
+            - 5858:5858
+    notifier:
+        ports:
+            - 5859:5858

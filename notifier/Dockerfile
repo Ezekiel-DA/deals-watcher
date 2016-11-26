@@ -22,4 +22,5 @@ RUN npm install
 # install app
 COPY ./notifier $appDir
 
-CMD ["npm", "start"]
+CMD ["node", "notifier.js"]
+#CMD ["node", "--debug-brk=5858", "notifier.js"]

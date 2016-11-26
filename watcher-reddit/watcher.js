@@ -13,7 +13,7 @@ const envVarsNeeded = [
 ]
 const [feedUrl, mongoUrl] = envVarsNeeded.map(utils.getEnvVar(process.exit.bind(process, 1)))
 
-const categoryFilter = R.pipe(R.prop('title'), R.test(/(\[GPU\].*GTX\s*1080)|(\[Mouse\].*)/ig))
+const categoryFilter = R.pipe(R.prop('title'), R.test(/(\[GPU\].*GTX\s*1080)|(\[Mouse\].*)|(\[CPU\]).*i7/ig))
 
 const extractLinkFromContent = R.pipe(
   R.prop('_'),
@@ -44,9 +44,8 @@ const addDataToDb = R.curry((db, data) => {
   ]
 
   let col = db.collection('deals')
-  col.insertMany(data, {w: 0}) // ignore write failures; duplicate URLs will fail, other failures will get another chance soon anyway
+  return col.insertMany(data, {w: 0}) // ignore write failures; duplicate URLs will fail, other failures will get another chance soon anyway
   .then(() => col.createIndexes(indexes))
-  .then(() => db.close())
 })
 
 const processFeed = R.curry((db, feed) => {
@@ -55,12 +54,16 @@ const processFeed = R.curry((db, feed) => {
     getAllFeedEntries,
     R.lift(processOneFeedEntry),
     R.filter(categoryFilter),
-    addDataToDb(db)
-  ))
+    utils.log,
+    R.unless(R.isEmpty, R.pipeP(addDataToDb(db), db.close.bind(db)))
+  )).catch(db.close.bind(db))
 })
 
 mongodb.MongoClient.connect(mongoUrl)
 .then(db => rp.get(feedUrl, {fullResponse: false})
   .then(processFeed(db))
-  .catch(R.pipe(utils.log, db.close))
+  .catch(err => {
+    console.log(err)
+    db.close()
+  })
 )
