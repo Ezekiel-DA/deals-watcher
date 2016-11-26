@@ -1,0 +1,14 @@
+{
+  "name": "dealswatcher-common",
+  "version": "0.0.1",
+  "description": "",
+  "main": " ",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nicolas Lefebvre",
+  "license": "MIT",
+  "dependencies": {
+    "ramda": "0.22.1"
+  }
+}

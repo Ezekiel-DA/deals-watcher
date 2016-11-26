@@ -1,0 +1,20 @@
+{
+  "name": "deals-watcher",
+  "version": "0.0.1",
+  "description": "",
+  "main": "watcher.js",
+  "scripts": {
+    "start": "node watcher.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nicolas Lefebvre",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "3.4.6",
+    "html-entities": "1.2.0",
+    "mongodb": "2.2.11",
+    "ramda": "0.22.1",
+    "requestretry": "1.12.0",
+    "xml2js": "0.4.17"
+  }
+}

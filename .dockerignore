@@ -1,0 +1,7 @@
+.vscode
+.git
+
+**/node_modules
+
+secrets.env
+README.md

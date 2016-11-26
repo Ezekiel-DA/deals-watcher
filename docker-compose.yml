@@ -1,0 +1,31 @@
+version: '2'
+
+services:
+    db:
+        image: mongo:3.2.11
+        volumes:
+            - deals-watcher-db:/data/db
+    watcher-reddit:
+        build:
+            context: ./
+            dockerfile: ./watcher-reddit/Dockerfile
+        image: nicolaslefebvre/dealswatcher-watcher-reddit
+        depends_on:
+            - db
+        env_file:
+            - ./default.env
+            - ./secrets.env
+    notifier:
+        build:
+            context: ./
+            dockerfile: ./notifier/Dockerfile
+        image: nicolaslefebvre/dealswatcher-notifier
+        depends_on:
+            - db
+        env_file:
+            - ./default.env
+            - ./secrets.env
+
+volumes:
+    deals-watcher-db:
+        driver: local
