@@ -1,5 +1,8 @@
 # A simple watcher/notifier for Reddit's /r/buildapcsales
 
+[![David dependency status](https://david-dm.org/Ezekiel-DA/deals-watcher/status.svg)](https://david-dm.org/Ezekiel-DA/deals-watcher)
+[![David devDependency status](https://david-dm.org/Ezekiel-DA/deals-watcher/dev-status.svg)](https://david-dm.org/Ezekiel-DA/deals-watcher?type=dev)
+
 # Quickstart
 
 Create a `secrets.env` containing:
