@@ -4,6 +4,16 @@ MAINTAINER Nicolas Lefebvre
 ARG NODE_ENV
 ENV NODE_ENV $NODE_ENV
 
+# install cron
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    cron \
+    dos2unix \
+ && rm -rf /var/lib/apt/lists/*
+
+# put the crontab in a temp location; the start script will put it where it belong, after prepending the env vars
+COPY ./watcher-reddit/crontab /tmp/crontab
+RUN chmod 0644 /tmp/crontab
+
 ARG appDir=/usr/src/watcher-reddit
 
 # create app dir
@@ -22,4 +32,10 @@ RUN npm install
 # install app
 COPY ./watcher-reddit $appDir
 
-CMD ["node", "watcher.js"]
+# make start script executable
+RUN dos2unix start.sh
+RUN chmod +x start.sh
+
+RUN touch /var/log/cron.log
+
+CMD ./start.sh

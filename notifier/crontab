@@ -1,0 +1,1 @@
+*/5 * * * * root cd /usr/src/notifier && /usr/local/bin/node notifier.js >> /var/log/cron.log 2>&1 
