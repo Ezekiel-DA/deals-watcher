@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
  && rm -rf /var/lib/apt/lists/*
 
 # put the crontab in a temp location; the start script will put it where it belong, after prepending the env vars
-COPY ./watcher-reddit/crontab /tmp/crontab
+COPY ./notifier/crontab /tmp/crontab
 RUN chmod 0644 /tmp/crontab
 
 ARG appDir=/usr/src/notifier
