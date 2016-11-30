@@ -1,7 +1,7 @@
 'use strict'
 
 const utils = require('../common/utils.js')
-const rp = require('requestretry')
+const rp = require('request-promise')
 const xml2js = require('bluebird').Promise.promisifyAll(require('xml2js'))
 const R = require('ramda')
 const htmlEntities = new (require('html-entities').AllHtmlEntities)()
@@ -56,7 +56,10 @@ const processFeed = R.curry((db, feed) => {
     R.filter(categoryFilter),
     utils.log,
     R.unless(R.isEmpty, R.pipeP(addDataToDb(db), db.close.bind(db)))
-  )).catch(db.close.bind(db))
+  )).catch(err => {
+    console.log(err)
+    db.close()
+  })
 })
 
 mongodb.MongoClient.connect(mongoUrl)
