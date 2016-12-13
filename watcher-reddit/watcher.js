@@ -49,17 +49,15 @@ const addDataToDb = R.curry((db, data) => {
 })
 
 const processFeed = R.curry((db, feed) => {
-  return xml2js.parseStringAsync(feed)
-  .then(R.pipe(
+  return R.pipeP(
+    xml2js.parseStringAsync,
     getAllFeedEntries,
     R.lift(processOneFeedEntry),
     R.filter(categoryFilter),
     utils.log,
-    R.unless(R.isEmpty, R.pipeP(addDataToDb(db), db.close.bind(db)))
-  )).catch(err => {
-    console.log(err)
-    db.close()
-  })
+    R.unless(R.isEmpty, addDataToDb(db)),
+    db.close.bind(db)
+  )(feed)
 })
 
 mongodb.MongoClient.connect(mongoUrl)
