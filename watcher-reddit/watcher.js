@@ -13,7 +13,7 @@ const envVarsNeeded = [
 ]
 const [feedUrl, mongoUrl] = envVarsNeeded.map(utils.getEnvVar(process.exit.bind(process, 1)))
 
-const categoryFilter = R.pipe(R.prop('title'), R.test(/(\[GPU\].*GTX\s*1080)|(\[Mouse\].*)|(\[CPU\]).*i7/ig))
+const categoryFilter = R.pipe(R.prop('title'), R.test(/(\[RAM\].*32GB)|(\[CPU\]).*i7/ig))
 
 const extractLinkFromContent = R.pipe(
   R.prop('_'),
