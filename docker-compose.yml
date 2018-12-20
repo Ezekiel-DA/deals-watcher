@@ -14,7 +14,12 @@ services:
             - db
         env_file:
             - ./default.env
-            - ./secrets.env
+    watcher-reddit-lego:
+        image: nicolaslefebvre/dealswatcher-watcher-reddit
+        depends_on:
+            - db
+        env_file:
+            - ./default_lego.env
     notifier:
         build:
             context: ./

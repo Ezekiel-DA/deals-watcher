@@ -8,12 +8,12 @@ const htmlEntities = new (require('html-entities').AllHtmlEntities)()
 const mongodb = require('mongodb')
 
 const envVarsNeeded = [
-  { name: 'deals_reddit_buildapcsales_url', purpose: 'URL of /r/buildapcsales RSS feed to consider' },
+  { name: 'deals_reddit_url', purpose: 'URL of subreddit RSS feed to consider' },
   { name: 'deals_mongourl', purpose: 'MongoDB URL' }
 ]
 const [feedUrl, mongoUrl] = envVarsNeeded.map(utils.getEnvVar(process.exit.bind(process, 1)))
 
-const categoryFilter = R.pipe(R.prop('title'), R.test(/(\[RAM\].*32GB)|(\[CPU\]).*i7/ig))
+const categoryFilter = R.pipe(R.prop('title'), R.test(/(\[RAM\].*32GB)|(\[CPU\]).*i7|Falcon/ig))
 
 const extractLinkFromContent = R.pipe(
   R.prop('_'),
